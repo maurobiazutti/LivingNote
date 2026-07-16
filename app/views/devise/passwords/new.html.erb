@@ -1,0 +1,25 @@
+<div class="bg-gray-900 min-h-screen flex items-center justify-center px-4">
+  <div class="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-8 shadow-xl backdrop-blur-sm max-w-md w-full">
+    <h2 class="text-3xl font-extrabold text-emerald-400 mb-2">Esqueci minha senha</h2>
+    <p class="text-gray-400 mb-6">Informe seu e-mail e enviaremos as instruções para redefinir sua senha.</p>
+
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="space-y-5">
+        <div>
+          <%= f.label :email, class: "block text-gray-300 mb-2" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-white placeholder-gray-500 transition duration-150" %>
+        </div>
+
+        <div class="pt-2">
+          <%= f.submit "Enviar instruções", class: "w-full text-center px-4 py-3 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] rounded-xl transition duration-150 font-semibold shadow-lg shadow-emerald-950/30 text-white cursor-pointer" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="mt-6 space-y-2 text-center">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
