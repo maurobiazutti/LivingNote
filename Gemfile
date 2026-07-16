@@ -24,10 +24,9 @@ group :development, :test do
   gem "bundler-audit", require: false
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
-  gem 'dotenv'
+  gem "dotenv"
 end
 
 group :development do
   gem "web-console"
 end
-
