@@ -18,15 +18,15 @@
   }
 
   /* Centraliza os links do menu de navegação no modo mini */
-  .sidebar-collapsed aside nav a {
+  .sidebar-collapsed nav a {
     justify-content: center !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
 
   /* Centraliza o botão de logout no rodapé no modo mini */
-  .sidebar-collapsed aside form,
-  .sidebar-collapsed aside button {
+  .sidebar-collapsed form,
+  .sidebar-collapsed button {
     justify-content: center !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
