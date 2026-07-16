@@ -1,1 +1,45 @@
 @import "tailwindcss";
+/* 
+  Aplicamos o efeito de esconder o texto APENAS em telas grandes (Desktop).
+  A regra `@media (min-width: 768px)` garante que no celular o texto NUNCA suma!
+*/
+@media (min-width: 768px) {
+
+  /* Esconde os elementos de texto quando a sidebar está recolhida no desktop */
+  .sidebar-collapsed .sidebar-text {
+    display: none !important;
+    opacity: 0;
+  }
+
+  /* Rotaciona a seta do botão de colapso quando recolhida */
+  .sidebar-collapsed .sidebar-toggle-icon {
+    transform: rotate(180deg);
+    display: inline-block;
+  }
+
+  /* Centraliza os links do menu de navegação no modo mini */
+  .sidebar-collapsed aside nav a {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Centraliza o botão de logout no rodapé no modo mini */
+  .sidebar-collapsed aside form,
+  .sidebar-collapsed aside button {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* 
+  Garante que no Mobile (telas menores que 768px), 
+  os textos e botões mantenham o comportamento padrão de largura cheia 
+*/
+@media (max-width: 767px) {
+  .sidebar-text {
+    display: inline !important;
+    opacity: 1 !important;
+  }
+}

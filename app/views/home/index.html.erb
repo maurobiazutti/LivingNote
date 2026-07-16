@@ -1,25 +1,45 @@
-<div class="flex flex-col items-center justify-center min-h-screen w-full bg-gray-900 text-white p-6">
-  <div class="w-full max-w-md text-center bg-gray-800/50 border border-gray-700/50 rounded-2xl p-8 shadow-xl backdrop-blur-sm">
-    <h1 class="text-4xl font-extrabold mb-2 text-emerald-400 tracking-tight flex items-center justify-center gap-2">
-      LivingNote <span class="text-3xl">📓</span>
-    </h1>
-    <p class="text-base text-gray-400 mb-8">Seu ecossistema pessoal de finanças, estudos e reflexões.</p>
-    
-    <% if user_signed_in? %>
-      <div class="space-y-4">
-        <p class="text-sm text-gray-400">
-          Conectado como: <br>
-          <strong class="text-white text-base block mt-1 break-all"><%= current_user.email %></strong>
-        </p>
-        <div class="pt-2">
-          <%= button_to "Sair do Sistema", destroy_user_session_path, method: :delete, class: "w-full px-4 py-3 bg-red-600/90 hover:bg-red-600 active:scale-[0.98] rounded-xl transition duration-150 font-semibold shadow-lg shadow-red-900/20 cursor-pointer" %>
-        </div>
+<% if user_signed_in? %>
+  <!-- ==================== TELA INTERNA (LOGADO) ==================== -->
+  <div class="max-w-4xl mx-auto space-y-8">
+    <!-- Card de Boas-vindas -->
+    <div class="bg-gradient-to-r from-emerald-950/40 to-gray-800/40 border border-emerald-900/30 rounded-3xl p-8 md:p-10 shadow-xl backdrop-blur-sm">
+      <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+        Olá, <span class="text-emerald-400">desenvolvedor</span>! 👋
+      </h1>
+      <p class="text-gray-300 mt-2 text-base md:text-lg leading-relaxed">
+        Bem-vindo de volta ao seu espaço. O que vamos organizar ou construir hoje?
+      </p>
+    </div>
+    <!-- Cards de Acesso Rápido -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Bloco Finanças -->
+      <div class="bg-gray-800/30 border border-gray-800 hover:border-emerald-500/30 rounded-2xl p-6 transition duration-300 group">
+        <div class="text-3xl mb-4">💰</div>
+        <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition">Controle Financeiro</h3>
+        <p class="text-sm text-gray-400 mt-2">Monitore suas receitas, despesas e saldo mensal com gráficos práticos.</p>
+        <span class="inline-block mt-4 text-xs font-semibold px-2.5 py-1 bg-emerald-950/50 text-emerald-400 rounded-full border border-emerald-900/30">Em breve</span>
       </div>
-    <% else %>
+      <!-- Bloco Currículos -->
+      <div class="bg-gray-800/30 border border-gray-800 hover:border-emerald-500/30 rounded-2xl p-6 transition duration-300 group">
+        <div class="text-3xl mb-4">📄</div>
+        <h3 class="text-xl font-bold text-white group-hover:text-emerald-400 transition">Gerador de Currículos</h3>
+        <p class="text-sm text-gray-400 mt-2">Cadastre suas experiências e gere múltiplos PDFs profissionais customizados.</p>
+        <span class="inline-block mt-4 text-xs font-semibold px-2.5 py-1 bg-emerald-950/50 text-emerald-400 rounded-full border border-emerald-900/30">Em breve</span>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <!-- ==================== PORTAL DE ENTRADA (DESLOGADO) ==================== -->
+  <div class="flex flex-col items-center justify-center min-h-screen w-full bg-gray-900 text-white p-6">
+    <div class="w-full max-w-md text-center bg-gray-800/50 border border-gray-700/50 rounded-2xl p-8 shadow-xl backdrop-blur-sm">
+      <h1 class="text-4xl font-extrabold mb-2 text-emerald-400 tracking-tight flex items-center justify-center gap-2">
+        LivingNote <span class="text-3xl">📓</span>
+      </h1>
+      <p class="text-base text-gray-400 mb-8">Seu ecossistema pessoal de finanças, estudos e reflexões.</p>
       <div class="flex flex-col gap-3">
         <%= link_to "Entrar", new_user_session_path, class: "w-full text-center px-4 py-3 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] rounded-xl transition duration-150 font-semibold shadow-lg shadow-emerald-950/30" %>
         <%= link_to "Criar uma Conta", new_user_registration_path, class: "w-full text-center px-4 py-3 bg-gray-700 hover:bg-gray-600 active:scale-[0.98] rounded-xl transition duration-150 font-semibold text-gray-200" %>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
