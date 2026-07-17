@@ -5,6 +5,7 @@ class Profile < ApplicationRecord
   has_one :address, dependent: :destroy
   has_many :experiences, dependent: :destroy
   has_many :educations, dependent: :destroy
+  has_many :skills, dependent: :destroy
    
   validates :full_name, presence: { message: "deve ser preenchido obrigatoriamente" }
   validates :cpf,
