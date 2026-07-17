@@ -18,6 +18,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 gem "devise", "~> 5.0"
+gem "cpf_cnpj"
 # gem "bcrypt", "~> 3.1.7"
 
 group :development, :test do
