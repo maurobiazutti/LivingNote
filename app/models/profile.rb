@@ -9,6 +9,7 @@ class Profile < ApplicationRecord
   has_many :languages, dependent: :destroy
   has_many :certifications, dependent: :destroy
   has_many :social_links, dependent: :destroy
+  has_many :resumes, dependent: :destroy
    
   validates :full_name, presence: { message: "deve ser preenchido obrigatoriamente" }
   validates :cpf,
