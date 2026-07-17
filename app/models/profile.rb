@@ -1,6 +1,6 @@
 class Profile < ApplicationRecord
   before_validation :normalize_cpf
-  
+
   belongs_to :user
   has_one :address, dependent: :destroy
   has_many :experiences, dependent: :destroy
@@ -10,7 +10,7 @@ class Profile < ApplicationRecord
   has_many :certifications, dependent: :destroy
   has_many :social_links, dependent: :destroy
   has_many :resumes, dependent: :destroy
-   
+
   validates :full_name, presence: { message: "deve ser preenchido obrigatoriamente" }
   validates :cpf,
             presence: true,
@@ -23,6 +23,6 @@ class Profile < ApplicationRecord
     self.cpf = CPF.strip(cpf) if cpf.present?
   end
 end
-  
 
-# CRIAR TESTES COM RSPEC PARA VALIDAR O MODELO PROFILE. 
+
+# CRIAR TESTES COM RSPEC PARA VALIDAR O MODELO PROFILE.
