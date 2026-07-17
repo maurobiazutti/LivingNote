@@ -12,7 +12,7 @@ class CreateProfiles < ActiveRecord::Migration[8.1]
     end
     # 2. Adiciona a coluna bigint depois que a tabela já nasceu isolada
     add_column :profiles, :user_id, :bigint, null: false
-    
+
     # 3. Cria o índice e a chave estrangeira manualmente
     add_index :profiles, :user_id
     add_foreign_key :profiles, :users, column: :user_id
