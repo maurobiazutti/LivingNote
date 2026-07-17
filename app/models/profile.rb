@@ -2,7 +2,8 @@ class Profile < ApplicationRecord
   before_validation :normalize_cpf
   
   belongs_to :user
- 
+  has_one :address, dependent: :destroy
+   
   validates :full_name, presence: { message: "deve ser preenchido obrigatoriamente" }
   validates :cpf,
             presence: true,
