@@ -1,0 +1,62 @@
+<div class="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto space-y-6">
+    <!-- Link para voltar à Home -->
+    <div class="flex justify-between items-center">
+      <%= link_to root_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-emerald-400 transition gap-2 group" do %>
+        <span class="group-hover:-translate-x-1 transition-transform">←</span> Voltar ao Painel
+      <% end %>
+      <%# No futuro, o botão de editar apontará para edit_profile_path %>
+      <span class="text-xs font-semibold px-3 py-1 bg-gray-800 text-gray-400 rounded-full border border-gray-700/50">
+        Perfil Ativo
+      </span>
+    </div>
+    <!-- Card Principal: Cabeçalho do Perfil -->
+    <div class="bg-gradient-to-r from-emerald-950/30 to-gray-800/30 border border-emerald-900/20 rounded-3xl p-6 md:p-8 shadow-xl backdrop-blur-sm flex flex-col sm:flex-row items-center gap-6">
+      <!-- Avatar Placeholder Avançado -->
+      <div class="w-20 h-20 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-4xl shadow-inner select-none">
+        👨‍💻
+      </div>
+      <!-- Informações Rápidas -->
+      <div class="flex-1 text-center sm:text-left space-y-1">
+        <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+          <%= @profile.full_name %>
+        </h1>
+        <div class="inline-flex items-center text-emerald-400 font-mono text-sm bg-emerald-950/40 border border-emerald-900/40 px-2.5 py-0.5 rounded-md">
+          @<%= @profile.username %>
+        </div>
+      </div>
+    </div>
+    <!-- Bloco de Informações Detalhadas -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Coluna da Esquerda: Contato e Documentos -->
+      <div class="md:col-span-1 space-y-6">
+        <div class="bg-gray-800/30 border border-gray-800 rounded-2xl p-6 space-y-4">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 border-b border-gray-800 pb-2">
+            Dados de Contato
+          </h3>
+          <!-- Telefone -->
+          <div class="space-y-0.5">
+            <span class="block text-xs text-gray-500">Telefone</span>
+            <span class="text-sm text-gray-200 font-medium"><%= @profile.phone.presence || "Não informado" %></span>
+          </div>
+          <!-- CPF -->
+          <div class="space-y-0.5">
+            <span class="block text-xs text-gray-500">CPF</span>
+            <span class="text-sm text-gray-200 font-mono"><%= @profile.cpf.presence || "Não informado" %></span>
+          </div>
+        </div>
+      </div>
+      <!-- Coluna da Direita: Biografia profissional -->
+      <div class="md:col-span-2">
+        <div class="bg-gray-800/30 border border-gray-800 rounded-2xl p-6 h-full space-y-4">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400 border-b border-gray-800 pb-2">
+            Sobre Mim (Biografia)
+          </h3>
+          <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">
+            <%= @profile.bio.presence || "Nenhuma biografia profissional cadastrada ainda." %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

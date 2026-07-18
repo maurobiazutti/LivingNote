@@ -3,7 +3,7 @@ class CpfValidator < ActiveModel::EachValidator
     return if value.blank?
 
     unless CPF.valid?(value)
-      record.errors.add(attribute, "é inválido")
+      record.errors.add(attribute, options[:message] || "é inválido")
     end
   end
 end
