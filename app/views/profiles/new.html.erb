@@ -1,0 +1,80 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-xl w-full space-y-8 bg-gray-800/40 border border-gray-800 p-8 md:p-10 rounded-3xl shadow-2xl backdrop-blur-sm">
+    <!-- Cabeçalho do Formulário -->
+    <div class="text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-950/50 border border-emerald-900/30 text-3xl mb-4">
+        👤
+      </div>
+      <h2 class="text-3xl font-extrabold text-white tracking-tight">
+        Complete seu <span class="text-emerald-400">Perfil</span>
+      </h2>
+      <p class="mt-2 text-sm text-gray-400">
+        Para liberar o acesso às ferramentas do LivingNote, precisamos de algumas informações essenciais.
+      </p>
+    </div>
+    <!-- Formulário Rails Tradicional -->
+    <%= form_with(model: @profile, url: profile_path, method: :post, local: true, class: "mt-8 space-y-6") do |f| %>
+      <!-- Bloco de Erros de Validação -->
+      <% if @profile.errors.any? %>
+        <div class="bg-red-950/40 border border-red-900/50 rounded-2xl p-4 text-sm text-red-200 animate-fade-in">
+          <div class="flex items-center gap-2 font-semibold text-red-400 mb-2">
+            <span>⚠️</span> Ops! Verifique os campos abaixo:
+          </div>
+          <ul class="list-disc pl-5 space-y-1 text-gray-300">
+            <% @profile.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="space-y-4 rounded-md shadow-sm">
+        <!-- Nome Completo -->
+        <div>
+          <%= f.label :full_name, "Nome Completo", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+          <%= f.text_field :full_name, 
+                           placeholder: "Seu nome completo", 
+                           class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Nome de Usuário / Link -->
+          <div>
+            <%= f.label :username, "Nome de Usuário", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+            <div class="relative flex items-center">
+              <span class="absolute left-4 text-gray-500 text-sm select-none">@</span>
+              <%= f.text_field :username, 
+                               placeholder: "username", 
+                               class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl pl-9 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+            </div>
+          </div>
+          <!-- CPF -->
+          <div>
+            <%= f.label :cpf, "CPF", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+            <%= f.text_field :cpf, 
+                             placeholder: "000.000.000-00", 
+                             class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+          </div>
+        </div>
+        <!-- Telefone -->
+        <div>
+          <%= f.label :phone, "Telefone / WhatsApp", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+          <%= f.text_field :phone, 
+                           placeholder: "(00) 00000-0000", 
+                           class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+        </div>
+        <!-- Biografia -->
+        <div>
+          <%= f.label :bio, "Sobre Você (Bio)", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+          <%= f.text_area :bio, 
+                          rows: 4, 
+                          placeholder: "Fale um pouco sobre suas habilidades, experiências ou interesses...", 
+                          class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200 resize-none" %>
+        </div>
+      </div>
+      <!-- Botão de Envio -->
+      <div>
+        <%= f.submit "Salvar Perfil e Entrar", 
+                     class: "w-full text-center px-4 py-3.5 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] rounded-xl transition duration-150 font-semibold text-white shadow-lg shadow-emerald-950/40 cursor-pointer" %>
+      </div>
+    <% end %>
+  </div>
+</div>

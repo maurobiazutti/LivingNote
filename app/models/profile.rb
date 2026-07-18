@@ -13,14 +13,14 @@ class Profile < ApplicationRecord
 
   validates :full_name, presence: { message: "deve ser preenchido obrigatoriamente" }
   validates :cpf,
-            presence: true,
-            uniqueness: true,
-            cpf: true
+              presence: true,
+              uniqueness: true,
+              cpf: true
 
   private
 
   def normalize_cpf
-    self.cpf = CPF.strip(cpf) if cpf.present?
+    self.cpf = cpf.gsub(/\D/, "") if cpf.present?
   end
 end
 
