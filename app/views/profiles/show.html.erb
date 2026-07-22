@@ -5,8 +5,10 @@
       <%= link_to root_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-emerald-400 transition gap-2 group" do %>
         <span class="group-hover:-translate-x-1 transition-transform">←</span> Voltar ao Painel
       <% end %>
-      <%= link_to "Editar Perfil", edit_profile_path %>
-      <%# No futuro, o botão de editar apontará para edit_profile_path %>
+      <%= link_to edit_profile_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-emerald-400 transition gap-2 group" do %>
+        <span class="group-hover:-translate-x-1 transition-transform">✏️</span> Editar Perfil
+      <% end %>
+      <%= button_to "Deletar Perfil", profile_path, method: :delete, data: { confirm: "Tem certeza que deseja apagar seu perfil?" } %>
       <span class="text-xs font-semibold px-3 py-1 bg-gray-800 text-gray-400 rounded-full border border-gray-700/50">
         Perfil Ativo
       </span>
