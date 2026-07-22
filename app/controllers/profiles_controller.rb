@@ -1,10 +1,12 @@
 class ProfilesController < ApplicationController
+  # before_action :authenticate_user!
+  before_action :set_profile, only: [:show, :edit, :update]
+
   def show
-     @profile = current_user.profile
+    #  @profile = current_user.profile
 
     unless @profile
       redirect_to new_profile_path, alert: "Complete seu perfil primeiro."
-      return
     end
   end
 
@@ -23,12 +25,24 @@ class ProfilesController < ApplicationController
   end
 
   def edit
+    # @profile = current_user.profile
   end
 
   def update
+    # @profile = current_user.profile
+
+    if @profile.update(profile_params)
+      redirect_to profile_path, notice: "Perfil atualizado com sucesso."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
+
+  def set_profile
+    @profile = current_user.profile
+  end
 
   def profile_params
     params.require(:profile).permit(
