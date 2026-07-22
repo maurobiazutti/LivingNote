@@ -13,7 +13,6 @@ class Profile < ApplicationRecord
 
   validates :full_name, presence: { message: "deve ser preenchido obrigatoriamente" }
   validates :cpf,
-              presence: true,
               uniqueness: true,
               cpf: true
 

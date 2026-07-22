@@ -1,10 +1,8 @@
 class ProfilesController < ApplicationController
   # before_action :authenticate_user!
-  before_action :set_profile, only: [:show, :edit, :update]
+  before_action :set_profile, only: [:show, :edit, :update, :destroy]
 
   def show
-    #  @profile = current_user.profile
-
     unless @profile
       redirect_to new_profile_path, alert: "Complete seu perfil primeiro."
     end
@@ -25,17 +23,19 @@ class ProfilesController < ApplicationController
   end
 
   def edit
-    # @profile = current_user.profile
   end
 
   def update
-    # @profile = current_user.profile
-
     if @profile.update(profile_params)
       redirect_to profile_path, notice: "Perfil atualizado com sucesso."
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @profile.destroy!
+    redirect_to root_path, notice: "Perfil excluído com sucesso.", statous: :see_other
   end
 
   private
