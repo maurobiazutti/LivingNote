@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "container" ]
+  static targets = [ "container", "content" ]
 
   toggle() {
     // Detecta se o usuário está no celular/tablet (largura menor que 768px, que é o 'md' do Tailwind)
@@ -14,6 +14,8 @@ export default class extends Controller {
       // No Desktop: Alterna entre a largura cheia (w-64) e o modo ícones (w-20)
       this.containerTarget.classList.toggle("md:w-64")
       this.containerTarget.classList.toggle("md:w-20")
+      this.contentTarget.classList.toggle("md:pl-64")
+      this.contentTarget.classList.toggle("md:pl-20")
       this.containerTarget.classList.toggle("sidebar-collapsed")
     }
   }
