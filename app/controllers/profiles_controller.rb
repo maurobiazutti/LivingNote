@@ -35,7 +35,7 @@ class ProfilesController < ApplicationController
 
   def destroy
     @profile.destroy!
-    redirect_to root_path, notice: "Perfil excluído com sucesso.", statous: :see_other
+    redirect_to root_path, notice: "Perfil excluído com sucesso.", status: :see_other
   end
 
   private
@@ -50,7 +50,8 @@ class ProfilesController < ApplicationController
       :username,
       :cpf,
       :phone,
-      :bio
+      :bio,
+      social_links_attributes: [:id, :platform, :url, :_destroy]
     )
   end
 end
