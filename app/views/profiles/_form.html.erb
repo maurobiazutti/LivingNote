@@ -13,7 +13,7 @@
       </p>
     </div>
     <!-- Formulário Rails Tradicional -->
-    <%= form_with(model: @profile, url: profile_path, method: :post, local: true, class: "mt-8 space-y-6") do |f| %>
+    <%= form_with(model: @profile, url: profile_path, method: @profile.persisted? ? :patch : :post, local: true, class: "mt-8 space-y-6") do |f| %>
       <!-- Bloco de Erros de Validação -->
       <% if @profile.errors.any? %>
         <div class="bg-red-950/40 border border-red-900/50 rounded-2xl p-4 text-sm text-red-200 animate-fade-in">
@@ -68,6 +68,49 @@
                           rows: 4, 
                           placeholder: "Fale um pouco sobre suas habilidades, experiências ou interesses...", 
                           class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200 resize-none" %>
+        </div>
+        <div data-controller="social-links" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400">Links Sociais</label>
+            <button type="button" data-action="click->social-links#add" class="text-sm text-emerald-400 hover:text-emerald-300 transition">
+              + Adicionar link
+            </button>
+          </div>
+          <div data-social-links-target="container" class="space-y-3">
+            <% @profile.social_links.build if @profile.social_links.empty? %>
+            <%= f.fields_for :social_links do |link_form| %>
+              <div data-social-links-target="item" class="grid grid-cols-1 sm:grid-cols-[140px_1fr_auto] gap-2 items-end">
+                <div>
+                  <%= link_form.label :platform, "Rede", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+                  <%= link_form.text_field :platform, placeholder: "GitHub", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+                </div>
+                <div>
+                  <%= link_form.label :url, "URL", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+                  <%= link_form.url_field :url, placeholder: "https://...", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+                </div>
+                <div>
+                  <%= link_form.check_box :_destroy, class: "hidden" %>
+                  <button type="button" data-action="click->social-links#remove" class="px-3 py-3 rounded-xl border border-gray-700 text-gray-400 hover:text-red-400 hover:border-red-500 transition" title="Remover link">✕</button>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <template data-social-links-target="template">
+            <div data-social-links-target="item" class="grid grid-cols-1 sm:grid-cols-[140px_1fr_auto] gap-2 items-end">
+              <input type="hidden" name="profile[social_links_attributes][NEW_RECORD][_destroy]" value="false">
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">Rede</label>
+                <input type="text" name="profile[social_links_attributes][NEW_RECORD][platform]" placeholder="GitHub" class="w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5">URL</label>
+                <input type="url" name="profile[social_links_attributes][NEW_RECORD][url]" placeholder="https://..." class="w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200">
+              </div>
+              <div>
+                <button type="button" data-action="click->social-links#remove" class="px-3 py-3 rounded-xl border border-gray-700 text-gray-400 hover:text-red-400 hover:border-red-500 transition" title="Remover link">✕</button>
+              </div>
+            </div>
+          </template>
         </div>
       </div>
       <!-- Botão de Envio -->

@@ -11,6 +11,8 @@ class Profile < ApplicationRecord
   has_many :social_links, dependent: :destroy
   has_many :resumes, dependent: :destroy
 
+  accepts_nested_attributes_for :social_links, allow_destroy: true, reject_if: :all_blank
+
   validates :full_name, presence: { message: "deve ser preenchido obrigatoriamente" }
   validates :cpf,
               uniqueness: true,

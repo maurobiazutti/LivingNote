@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_17_200450) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_24_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -107,6 +107,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_17_200450) do
     t.string "platform"
     t.uuid "profile_id", null: false
     t.datetime "updated_at", null: false
+    t.string "url"
     t.index ["profile_id"], name: "index_social_links_on_profile_id"
   end
 
