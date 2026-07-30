@@ -1,6 +1,6 @@
 class ProfilesController < ApplicationController
   # before_action :authenticate_user!
-  before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :set_profile, only: [ :show, :edit, :update, :destroy ]
 
   def show
     unless @profile
@@ -51,7 +51,7 @@ class ProfilesController < ApplicationController
       :cpf,
       :phone,
       :bio,
-      social_links_attributes: [:id, :platform, :url, :_destroy]
+      social_links_attributes: [ :id, :platform, :url, :_destroy ]
     )
   end
 end
