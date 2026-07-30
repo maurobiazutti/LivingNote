@@ -47,6 +47,20 @@
             <span class="block text-xs text-gray-500">CPF</span>
             <span class="text-sm text-gray-200 font-mono"><%= @profile.cpf.presence || "Não informado" %></span>
           </div>
+          <% if @profile.social_links.any? %>
+            <div class="space-y-2">
+              <span class="block text-xs text-gray-500">Links</span>
+              <div class="flex flex-wrap gap-2">
+                <% @profile.social_links.each do |link| %>
+                  <% next if link.platform.blank? || link.url.blank? %>
+                  <%= link_to link.url, target: "_blank", rel: "noopener noreferrer", class: "inline-flex items-center rounded-full border border-emerald-900/40 bg-emerald-950/30 px-3 py-1 text-sm text-emerald-300 hover:bg-emerald-900/40 transition" do %>
+                    <span class="mr-1">🔗</span>
+                    <%= link.platform %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
       <!-- Coluna da Direita: Biografia profissional -->
