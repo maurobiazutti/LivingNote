@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "educations_list" do %>
+  <%= render "educations/list", educations: @profile.educations.order(:start_date) %>
+<% end %>

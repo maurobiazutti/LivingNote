@@ -4,6 +4,9 @@ class EducationsController < ApplicationController
 
   def index
     @educations = @profile.educations.order(:start_date)
+    @certifications = @profile.certifications.order(:name)
+    @skills = @profile.skills.order(:name)
+    @languages = @profile.languages.order(:name)
   end
 
   def new
@@ -14,7 +17,10 @@ class EducationsController < ApplicationController
     @education = @profile.educations.build(education_params)
 
     if @education.save
-      redirect_to profile_educations_path, notice: "Formação acadêmica adicionada com sucesso."
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to profile_educations_path, notice: "Formação acadêmica adicionada com sucesso." }
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +31,10 @@ class EducationsController < ApplicationController
 
   def update
     if @education.update(education_params)
-      redirect_to profile_educations_path, notice: "Formação acadêmica atualizada com sucesso."
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to profile_educations_path, notice: "Formação acadêmica atualizada com sucesso." }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -33,7 +42,10 @@ class EducationsController < ApplicationController
 
   def destroy
     @education.destroy!
-    redirect_to profile_educations_path, notice: "Formação acadêmica excluída com sucesso.", status: :see_other
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to profile_educations_path, notice: "Formação acadêmica excluída com sucesso.", status: :see_other }
+    end
   end
 
   private

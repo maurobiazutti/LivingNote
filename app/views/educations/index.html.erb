@@ -1,43 +1,70 @@
 <div class="max-w-4xl mx-auto space-y-6">
   <div class="flex justify-between items-center">
     <div>
-      <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">🎓 Formação Acadêmica</h1>
-      <p class="text-sm text-gray-400 mt-1">Gerencie seus cursos, diplomas e instituições.</p>
+      <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">📋 Seções do Currículo</h1>
+      <p class="text-sm text-gray-400 mt-1">Gerencie formações, certificações, skills e idiomas em um só lugar.</p>
     </div>
     <%= link_to profile_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-emerald-400 transition gap-2 group" do %>
       <span class="group-hover:-translate-x-1 transition-transform">←</span> Voltar ao Perfil
     <% end %>
   </div>
 
-  <div class="flex justify-end">
-    <%= link_to "+ Adicionar Formação", new_profile_education_path, class: "inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-sm font-semibold text-white transition shadow-lg shadow-emerald-950/40" %>
+  <div data-controller="tabs" class="space-y-6">
+    <div class="flex flex-wrap gap-2 border-b border-gray-800 pb-3" data-tabs-target="nav" role="tablist">
+      <button type="button" data-action="click->tabs#select" data-tab="educations"
+              class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition border border-transparent"
+              data-active="bg-emerald-600 text-white shadow-lg shadow-emerald-950/40"
+              data-inactive="text-gray-400 hover:text-white hover:bg-gray-800">
+        🎓 Formação
+      </button>
+      <button type="button" data-action="click->tabs#select" data-tab="certifications"
+              class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition border border-transparent"
+              data-active="bg-emerald-600 text-white shadow-lg shadow-emerald-950/40"
+              data-inactive="text-gray-400 hover:text-white hover:bg-gray-800">
+        📜 Certificações
+      </button>
+      <button type="button" data-action="click->tabs#select" data-tab="skills"
+              class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition border border-transparent"
+              data-active="bg-emerald-600 text-white shadow-lg shadow-emerald-950/40"
+              data-inactive="text-gray-400 hover:text-white hover:bg-gray-800">
+        💡 Skills
+      </button>
+      <button type="button" data-action="click->tabs#select" data-tab="languages"
+              class="tab-btn px-4 py-2.5 rounded-xl text-sm font-semibold transition border border-transparent"
+              data-active="bg-emerald-600 text-white shadow-lg shadow-emerald-950/40"
+              data-inactive="text-gray-400 hover:text-white hover:bg-gray-800">
+        🌐 Idiomas
+      </button>
+    </div>
+
+    <section data-tabs-target="panel" data-panel="educations">
+      <div class="flex justify-end mb-4">
+        <%= link_to "+ Adicionar Formação", new_profile_education_path, data: { turbo_frame: "modal" }, class: "inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-sm font-semibold text-white transition shadow-lg shadow-emerald-950/40" %>
+      </div>
+      <%= render "educations/list", educations: @educations %>
+    </section>
+
+    <section data-tabs-target="panel" data-panel="certifications" class="hidden">
+      <div class="flex justify-end mb-4">
+        <%= link_to "+ Adicionar Certificação", new_profile_certification_path, data: { turbo_frame: "modal" }, class: "inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-sm font-semibold text-white transition shadow-lg shadow-emerald-950/40" %>
+      </div>
+      <%= render "certifications/list", certifications: @certifications %>
+    </section>
+
+    <section data-tabs-target="panel" data-panel="skills" class="hidden">
+      <div class="flex justify-end mb-4">
+        <%= link_to "+ Adicionar Skill", new_profile_skill_path, data: { turbo_frame: "modal" }, class: "inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-sm font-semibold text-white transition shadow-lg shadow-emerald-950/40" %>
+      </div>
+      <%= render "skills/list", skills: @skills %>
+    </section>
+
+    <section data-tabs-target="panel" data-panel="languages" class="hidden">
+      <div class="flex justify-end mb-4">
+        <%= link_to "+ Adicionar Idioma", new_profile_language_path, data: { turbo_frame: "modal" }, class: "inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-sm font-semibold text-white transition shadow-lg shadow-emerald-950/40" %>
+      </div>
+      <%= render "languages/list", languages: @languages %>
+    </section>
   </div>
 
-  <% if @educations.any? %>
-    <div class="space-y-3">
-      <% @educations.each do |education| %>
-        <div class="bg-gray-800/30 border border-gray-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div class="space-y-1">
-            <h3 class="text-white font-semibold"><%= education.degree %> <span class="text-gray-400 font-normal">— <%= education.institution %></span></h3>
-            <% if education.course.present? %>
-              <p class="text-sm text-gray-400"><%= education.course %></p>
-            <% end %>
-            <p class="text-xs text-gray-500">
-              <%= education.start_date.strftime("%m/%Y") %> — <%= education.end_date ? education.end_date.strftime("%m/%Y") : "Cursando" %>
-            </p>
-          </div>
-          <div class="flex items-center gap-2 sm:shrink-0">
-            <%= link_to "Editar", edit_profile_education_path(education), class: "inline-flex items-center px-3 py-1.5 rounded-lg text-sm border border-gray-700 text-gray-300 hover:text-emerald-400 hover:border-emerald-500 transition" %>
-            <%= button_to "Excluir", profile_education_path(education), method: :delete, data: { confirm: "Tem certeza que deseja excluir esta formação?" }, class: "inline-flex items-center px-3 py-1.5 rounded-lg text-sm border border-red-900/40 text-red-400 hover:bg-red-950/40 transition cursor-pointer" %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="bg-gray-800/30 border border-dashed border-gray-700 rounded-2xl p-10 text-center">
-      <div class="text-4xl mb-3">🎓</div>
-      <p class="text-gray-400">Nenhuma formação cadastrada ainda.</p>
-      <p class="text-sm text-gray-500 mt-1">Adicione sua primeira formação para começar a montar seu currículo.</p>
-    </div>
-  <% end %>
+  <%= turbo_frame_tag "modal" %>
 </div>

@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "languages_list" do %>
+  <%= render "languages/list", languages: @profile.languages.order(:name) %>
+<% end %>

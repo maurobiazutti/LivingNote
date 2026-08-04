@@ -1,0 +1,30 @@
+<div class="space-y-6">
+  <%= form_with(model: language, url: language.persisted? ? profile_language_path(language) : profile_languages_path, method: language.persisted? ? :patch : :post, local: true, class: "space-y-4") do |f| %>
+    <% if language.errors.any? %>
+      <div class="bg-red-950/40 border border-red-900/50 rounded-2xl p-4 text-sm text-red-200">
+        <div class="flex items-center gap-2 font-semibold text-red-400 mb-2">
+          <span>⚠️</span> Ops! Verifique os campos abaixo:
+        </div>
+        <ul class="list-disc pl-5 space-y-1 text-gray-300">
+          <% language.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :name, "Idioma", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+      <%= f.text_field :name, placeholder: "Ex.: Inglês", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+    </div>
+
+    <div>
+      <%= f.label :level, "Nível (opcional)", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+      <%= f.select :level, [ "Básico", "Intermediário", "Avançado", "Fluente", "Nativo" ], { include_blank: "Selecione um nível" }, class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+    </div>
+
+    <div>
+      <%= f.submit language.persisted? ? "Salvar Alterações" : "Adicionar Idioma", class: "w-full text-center px-4 py-3.5 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] rounded-xl transition duration-150 font-semibold text-white shadow-lg shadow-emerald-950/40 cursor-pointer" %>
+    </div>
+  <% end %>
+</div>
