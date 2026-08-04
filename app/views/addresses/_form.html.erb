@@ -1,0 +1,58 @@
+<div class="space-y-6">
+  <%= form_with(model: address, url: profile_address_path, method: address.persisted? ? :patch : :post, local: true, class: "space-y-4") do |f| %>
+    <% if address.errors.any? %>
+      <div class="bg-red-950/40 border border-red-900/50 rounded-2xl p-4 text-sm text-red-200">
+        <div class="flex items-center gap-2 font-semibold text-red-400 mb-2">
+          <span>⚠️</span> Ops! Verifique os campos abaixo:
+        </div>
+        <ul class="list-disc pl-5 space-y-1 text-gray-300">
+          <% address.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="sm:col-span-2">
+        <%= f.label :street, "Rua / Logradouro", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+        <%= f.text_field :street, placeholder: "Ex.: Avenida Paulista", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+      </div>
+      <div>
+        <%= f.label :number, "Número", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+        <%= f.text_field :number, placeholder: "Ex.: 1000", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+      </div>
+    </div>
+
+    <div>
+      <%= f.label :district, "Bairro", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+      <%= f.text_field :district, placeholder: "Ex.: Bela Vista", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <%= f.label :city, "Cidade", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+        <%= f.text_field :city, placeholder: "Ex.: São Paulo", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+      </div>
+      <div>
+        <%= f.label :state, "Estado", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+        <%= f.text_field :state, placeholder: "Ex.: SP", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <%= f.label :zip_code, "CEP", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+        <%= f.text_field :zip_code, placeholder: "Ex.: 01310-100", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+      </div>
+      <div>
+        <%= f.label :country, "País", class: "block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1.5" %>
+        <%= f.text_field :country, placeholder: "Ex.: Brasil", class: "w-full bg-gray-900/60 border border-gray-700/60 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition duration-200" %>
+      </div>
+    </div>
+
+    <div>
+      <%= f.submit address.persisted? ? "Salvar Alterações" : "Cadastrar Endereço", class: "w-full text-center px-4 py-3.5 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] rounded-xl transition duration-150 font-semibold text-white shadow-lg shadow-emerald-950/40 cursor-pointer" %>
+    </div>
+  <% end %>
+</div>
