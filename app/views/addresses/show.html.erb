@@ -1,0 +1,15 @@
+<div class="max-w-4xl mx-auto space-y-6">
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">📌 Endereço</h1>
+      <p class="text-sm text-gray-400 mt-1">Cadastre seu endereço para completar suas informações pessoais.</p>
+    </div>
+    <%= link_to profile_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-emerald-400 transition gap-2 group" do %>
+      <span class="group-hover:-translate-x-1 transition-transform">←</span> Voltar ao Perfil
+    <% end %>
+  </div>
+
+  <%= render "form", address: @address %>
+
+  <%= turbo_frame_tag "modal" %>
+</div>
