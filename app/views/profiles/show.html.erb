@@ -8,7 +8,8 @@
       <%= link_to edit_profile_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-emerald-400 transition gap-2 group" do %>
         <span class="group-hover:-translate-x-1 transition-transform">✏️</span> Editar Perfil
       <% end %>
-      <%= button_to "Deletar Perfil", profile_path, method: :delete, data: { confirm: "Tem certeza que deseja apagar seu perfil?" } %>
+      <%= button_to "Deletar Perfil", profile_path, method: :delete, data: { confirm: "Tem certeza que deseja apagar seu perfil?" },
+           class: "inline-flex items-center gap-2 text-sm text-red-400 hover:text-red-300 transition px-3 py-1.5 rounded-lg border border-red-900/40 hover:bg-red-950/40 cursor-pointer" %>
       <span class="text-xs font-semibold px-3 py-1 bg-gray-800 text-gray-400 rounded-full border border-gray-700/50">
         Perfil Ativo
       </span>
