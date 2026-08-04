@@ -1,0 +1,27 @@
+<div id="experiences_list" class="space-y-3">
+  <% if experiences.any? %>
+    <% experiences.each do |experience| %>
+      <div class="bg-gray-800/30 border border-gray-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <h3 class="text-white font-semibold"><%= experience.position %> <span class="text-gray-400 font-normal">— <%= experience.company %></span></h3>
+          <% if experience.description.present? %>
+            <p class="text-sm text-gray-400 whitespace-pre-line"><%= experience.description %></p>
+          <% end %>
+          <p class="text-xs text-gray-500">
+            <%= experience.start_date.strftime("%m/%Y") %> — <%= experience.end_date ? experience.end_date.strftime("%m/%Y") : "Atual" %>
+          </p>
+        </div>
+        <div class="flex items-center gap-2 sm:shrink-0">
+          <%= link_to "Editar", edit_profile_experience_path(experience), data: { turbo_frame: "modal" }, class: "inline-flex items-center px-3 py-1.5 rounded-lg text-sm border border-gray-700 text-gray-300 hover:text-emerald-400 hover:border-emerald-500 transition" %>
+          <%= button_to "Excluir", profile_experience_path(experience), method: :delete, data: { confirm: "Tem certeza que deseja excluir esta experiência?" }, class: "inline-flex items-center px-3 py-1.5 rounded-lg text-sm border border-red-900/40 text-red-400 hover:bg-red-950/40 transition cursor-pointer" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="bg-gray-800/30 border border-dashed border-gray-700 rounded-2xl p-10 text-center">
+      <div class="text-4xl mb-3">💼</div>
+      <p class="text-gray-400">Nenhuma experiência cadastrada ainda.</p>
+      <p class="text-sm text-gray-500 mt-1">Adicione sua primeira experiência para começar a montar seu currículo.</p>
+    </div>
+  <% end %>
+</div>
