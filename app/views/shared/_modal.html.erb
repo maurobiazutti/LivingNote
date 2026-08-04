@@ -1,0 +1,21 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-950/70 backdrop-blur-sm"
+       data-controller="modal"
+       data-action="click->modal#backdropClose">
+    <div class="bg-gray-900 border border-gray-800 rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden"
+         data-action="click->modal#stopPropagation">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+          <span class="text-2xl"><%= icon %></span> <%= title %>
+        </h2>
+        <button type="button" data-action="click->modal#close"
+                class="text-gray-400 hover:text-white text-2xl leading-none cursor-pointer px-2" aria-label="Fechar">
+          ×
+        </button>
+      </div>
+      <div class="p-6 md:p-8">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+<% end %>

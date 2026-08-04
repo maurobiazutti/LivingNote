@@ -1,0 +1,27 @@
+<div id="educations_list" class="space-y-3">
+  <% if educations.any? %>
+    <% educations.each do |education| %>
+      <div class="bg-gray-800/30 border border-gray-800 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <h3 class="text-white font-semibold"><%= education.degree %> <span class="text-gray-400 font-normal">— <%= education.institution %></span></h3>
+          <% if education.course.present? %>
+            <p class="text-sm text-gray-400"><%= education.course %></p>
+          <% end %>
+          <p class="text-xs text-gray-500">
+            <%= education.start_date.strftime("%m/%Y") %> — <%= education.end_date ? education.end_date.strftime("%m/%Y") : "Cursando" %>
+          </p>
+        </div>
+        <div class="flex items-center gap-2 sm:shrink-0">
+          <%= link_to "Editar", edit_profile_education_path(education), data: { turbo_frame: "modal" }, class: "inline-flex items-center px-3 py-1.5 rounded-lg text-sm border border-gray-700 text-gray-300 hover:text-emerald-400 hover:border-emerald-500 transition" %>
+          <%= button_to "Excluir", profile_education_path(education), method: :delete, data: { confirm: "Tem certeza que deseja excluir esta formação?" }, class: "inline-flex items-center px-3 py-1.5 rounded-lg text-sm border border-red-900/40 text-red-400 hover:bg-red-950/40 transition cursor-pointer" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="bg-gray-800/30 border border-dashed border-gray-700 rounded-2xl p-10 text-center">
+      <div class="text-4xl mb-3">🎓</div>
+      <p class="text-gray-400">Nenhuma formação cadastrada ainda.</p>
+      <p class="text-sm text-gray-500 mt-1">Adicione sua primeira formação para começar a montar seu currículo.</p>
+    </div>
+  <% end %>
+</div>

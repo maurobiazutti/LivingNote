@@ -5,6 +5,12 @@ RSpec.describe Language, type: :model do
     it { is_expected.to belong_to(:profile) }
   end
 
+  describe 'validations' do
+    subject { build(:language) }
+
+    it { is_expected.to validate_presence_of(:name) }
+  end
+
   describe 'criação válida' do
     it 'é válido com atributos corretos' do
       expect(build(:language)).to be_valid

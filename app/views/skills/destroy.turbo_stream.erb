@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "skills_list" do %>
+  <%= render "skills/list", skills: @profile.skills.order(:name) %>
+<% end %>
