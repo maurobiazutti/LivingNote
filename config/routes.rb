@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root "home#index"
-  resource :profile, only: [ :show, :new, :create, :edit, :update, :destroy ]
+  resource :profile, only: [ :show, :new, :create, :edit, :update, :destroy ] do
+    resources :educations
+  end
 end
