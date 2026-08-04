@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "experiences_list" do %>
+  <%= render "experiences/list", experiences: @profile.experiences.order(:start_date) %>
+<% end %>

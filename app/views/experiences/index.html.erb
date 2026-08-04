@@ -1,0 +1,20 @@
+<div class="max-w-4xl mx-auto space-y-6">
+  <div class="flex justify-between items-center">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">💼 Experiências Profissionais</h1>
+      <p class="text-sm text-gray-400 mt-1">Cadastre suas experiências de trabalho para enriquecer seu currículo.</p>
+    </div>
+    <%= link_to profile_path, class: "inline-flex items-center text-sm text-gray-400 hover:text-emerald-400 transition gap-2 group" do %>
+      <span class="group-hover:-translate-x-1 transition-transform">←</span> Voltar ao Perfil
+    <% end %>
+  </div>
+
+  <div>
+    <div class="flex justify-end mb-4">
+      <%= link_to "+ Adicionar Experiência", new_profile_experience_path, data: { turbo_frame: "modal" }, class: "inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 rounded-xl text-sm font-semibold text-white transition shadow-lg shadow-emerald-950/40" %>
+    </div>
+    <%= render "experiences/list", experiences: @experiences %>
+  </div>
+
+  <%= turbo_frame_tag "modal" %>
+</div>

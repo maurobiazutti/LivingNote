@@ -83,6 +83,11 @@
       <h4 class="font-semibold text-white group-hover:text-emerald-400 transition">Formação Acadêmica</h4>
       <p class="text-xs text-gray-500 mt-1"><%= pluralize(@profile.educations.size, "registro") %></p>
     <% end %>
+    <%= link_to profile_experiences_path, class: "bg-gray-800/30 border border-gray-800 hover:border-emerald-500/30 rounded-2xl p-5 transition group" do %>
+      <div class="text-2xl mb-2">💼</div>
+      <h4 class="font-semibold text-white group-hover:text-emerald-400 transition">Experiências Profissionais</h4>
+      <p class="text-xs text-gray-500 mt-1"><%= pluralize(@profile.experiences.size, "registro") %></p>
+    <% end %>
   </div>
   </div>
 </div>
