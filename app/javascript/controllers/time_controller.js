@@ -57,8 +57,28 @@ export default class extends Controller {
 
   finish() {
     this.pause()
-    // Toca um bipe de alerta quando o tempo acaba
+    this.playAlert()
     alert("⏰ Tempo esgotado!")
+  }
+
+  // Toca um bipe de alerta quando o tempo acaba (Web Audio API, sem arquivos)
+  playAlert() {
+    const context = new (window.AudioContext || window.webkitAudioContext)()
+    const beeps = [0, 0.6, 1.2]
+
+    beeps.forEach((offset) => {
+      const osc = context.createOscillator()
+      const gain = context.createGain()
+      osc.connect(gain)
+      gain.connect(context.destination)
+      osc.type = 'sine'
+      osc.frequency.value = 880
+
+      gain.gain.setValueAtTime(0.4, context.currentTime + offset)
+      gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + offset + 0.4)
+      osc.start(context.currentTime + offset)
+      osc.stop(context.currentTime + offset + 0.4)
+    })
   }
 
   updateDisplay() {
