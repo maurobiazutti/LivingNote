@@ -25,7 +25,14 @@ Aplicação Rails 8.1 (Ruby 3.4.8, PostgreSQL, Tailwind + Importmap/Propshaft, D
 - CI Local: `bin/ci` executa `bin/setup --skip-server`, `bin/rubocop`, `bin/bundler-audit`, `bin/importmap audit` e `bin/brakeman`.
 - Análises de segurança: `bin/brakeman` e `bin/bundler-audit`. O Rubocop utiliza o estilo `rubocop-rails-omakase`.
 
+## Estado Atual / Ponto de Retomada
+- Branch `main`, sincronizado com `origin/main`, working tree limpo.
+- **Últimos commits:** `update_rails_8.1.3.1` (Rails atualizado p/ CVE-2026-66066 no Active Storage) e o merge do **Pomodoro** (feature completa: timer Stimulus em `app/javascript/controllers/time_controller.js`, presets 25/30/5min, tempo customizado, sons via Web Audio API, link no sidebar abrindo em nova aba).
+- **Próximos passos prováveis (placeholders no sidebar, `app/views/layouts/application.html.erb`):**
+  1. **Finanças** — link `href="#`  sem rota (em breve).
+  2. **Meus Currículos** — link `href="#"` sem rota. Model `Resume` existe mas ainda **sem** CRUD/rotas integradas.
+
 ## Convenções
-- Os geradores do Rails estão configurados para **chaves primárias UUID** (`config.generators.orm.primary_key_type = :uuid`) — novas migrations devem utilizar IDs no formato UUID/string.
+- Os geradores do Rails estão configurados para **chaves primárias UUID** (`config.generators.orm.primary_key_type = :uuid`) — novos migrations devem utilizar IDs no formato UUID/string.
 - A autenticação é gerenciada pelo Devise; o `HomeController#index` é o único controller que ignora o filtro `authenticate_user!`.
 - Execute a verificação de código antes de finalizar qualquer tarefa: `bin/rubocop`.
