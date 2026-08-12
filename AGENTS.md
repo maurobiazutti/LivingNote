@@ -1,38 +1,67 @@
 # AGENTS.md
 
-Aplicação Rails 8.1 (Ruby 3.4.8, PostgreSQL, Tailwind + Importmap/Propshaft, Devise). Sistema pessoal e privado.
+Aplicação Rails 8.1 (Ruby 3.4.8, PostgreSQL, Tailwind + Importmap/Propshaft, Devise, Hotwire/Turbo/Stimulus). Sistema pessoal e privado com potencial de evoluir para multi-usuário.
 
-## Importante: README vs. Realidade
-- O README descreve uma aplicação aspiracional de "três pilares" (Financeiro/Academia/Reflexões). O **código real é um gerador de currículos**: `Profile` → `Address`, `Experiences`, `Educations`, `Skills`, `Languages`, `Certifications`, `SocialLinks`, `Resumes`.
-- Confie no código/configuração e não no README. **Não existem** models de Financeiro/Academia/Reflexões.
+> **Regra fundamental:** o LivingNote deve ser **simples por dentro, agradável por fora e coerente como produto.** Organizar conhecimento, rotina, estudos, carreira e evolução pessoal em um único espaço — não acumular funcionalidades.
 
-## Localização / Idioma
-- A interface (UI), mensagens de validação e verificações de CPF estão em **Português (pt-BR)**, mesmo que os arquivos de configuração venham com o `en.yml` padrão. Mantenha as strings voltadas ao usuário e as validações em português.
-- O CPF é normalizado apenas para dígitos (`cpf.gsub(/\D/,'')`) no método `Profile#normalize_cpf` antes de salvar. Utiliza a gem `cpf_cnpj` + o validador customizado `CpfValidator` (`app/services/cpf_validator.rb`).
+## Visão do Produto (documento de diretrizes)
+- O guia de visão e diretrizes está em `LivingNote — Contexto do Produto e Diretrizes para Agents.md`.
+- O LivingNote **não é** "um app com várias ferramentas", mas um **ambiente pessoal** que conecta `Conhecimento → Anotações → Estudos → Tarefas → Foco → Carreira → Vida pessoal`.
+- **5 pilares:** ① Conhecimento/Blog (público), ② Produtividade (Todo List + Pomodoro), ③ Cadernos/Anotações, ④ Estudos, ⑤ Carreira (Perfil + Currículos).
+- **Cada nova feature deve responder:** qual problema resolve? como conecta aos módulos existentes? a qual pilar pertence? existe solução mais simples?
+- **Home pública ≠ Dashboard.** A Home apresenta/converte; o Dashboard organiza o ambiente autenticado (clareza > quantidade de widgets).
+
+## Importante: Realidade atual (o que EXISTE hoje)
+- **Módulo Carreira** é o único totalmente implementado: `Profile` → `Address`, `Experiences`, `Educations`, `Skills`, `Languages`, `Certifications`, `SocialLinks`, `Resumes`.
+- **Pomodoro** funcional (área Produtividade): timer Stimulus, presets 25/30/5min, tempo customizado, sons via Web Audio API, abre em aba nova.
+- **Autenticação** Devise completa; `HomeController#index` ignora `authenticate_user!`.
+- **NÃO existem:** Blog/Artigos, Cadernos/Anotações, Estudos, Todo List, Finanças, geração de PDF dos currículos. São roadmap, não código.
+
+## Currículos (conceito-chave)
+- O currículo **NÃO duplica** os dados do Perfil: ele é uma **seleção/configuração** dos dados-base (experiências, formações, skills, certificações…).
+- Máximo de **3 currículos por perfil** (validação em `Resume#profile_can_have_only_three_resumes`).
+- Model `Resume` existe; **CRUD/rotas ainda não integrados** (link no sidebar é placeholder).
 
 ## Testes
-- **Não há framework de testes configurado.** O arquivo `config/application.rb` cometa a linha `rails/test_unit/railtie`, e não existe um diretório `test/`. NÃO confie no comando `bin/rails test` nem presuma o uso de RSpec. A integração contínua (CI) não roda testes no momento.
-- Há um comentário em `app/models/profile.rb` sugerindo testes em RSpec — adicionar o RSpec exigirá configurá-lo do zero.
+- **RSpec configurado:** `spec/` com `rails_helper.rb`, `spec_helper.rb`, factories em `spec/factories/` e specs de todos os models (`spec/models/`). Gems: `rspec-rails`, `factory_bot_rails`, `shoulda-matchers`.
+- Rodar com `bundle exec rspec`. Não usar `bin/rails test` (o railtie `rails/test_unit/railtie` está comentado e não há dir `test/`).
+- Sugerir/adicionar specs ao criar ou alterar models/validações.
+
+## Localização / Idioma
+- Interface, mensagens de validação e verificações de CPF em **Português (pt-BR)**, mesmo com o `en.yml` padrão presente.
+- CPF normalizado para dígitos (`cpf.gsub(/\D/,'')`) em `Profile#normalize_cpf`; usa gem `cpf_cnpj` + `CpfValidator` (`app/services/cpf_validator.rb`).
 
 ## Banco de Dados / Variáveis de Ambiente
-- As credenciais do banco vêm de variáveis de ambiente (`DB_USERNAME`, `DB_PASSWORD`, `DB_HOST`), lidas pelo `config/database.yml` e fornecidas pela gem `dotenv` através do `.env`.
-- Os arquivos `.env*` e `config/*.key` estão no `.gitignore` — nunca commite esses arquivos nem adicione seus valores em arquivos versionados.
-- O ambiente de produção utiliza bancos de dados separados para Solid Queue, Solid Cache e Solid Cable, com caminhos de migração distintos (`db/queue_migrate`, etc.).
+- Credenciais via variáveis de ambiente (`DB_USERNAME`, `DB_PASSWORD`, `DB_HOST`) lidas pelo `config/database.yml` e fornecidas pelo dotenv (`.env`).
+- `.env*` e `config/*.key` estão no `.gitignore` — **nunca** commite nem versione esses valores.
+- Produção usa bancos separados para Solid Queue/Cache/Cable (`db/queue_migrate`, etc.).
+- Priorizar integridade no banco (FKs, índices, unique index, null constraints) além das validações Rails.
+
+## Segurança / Privacidade
+- Dados sensíveis (CPF, endereço, experiências, currículos, finanças futuras, notas) são **privados por padrão**.
+- **Nunca** expor dados pessoais em páginas públicas (somente o Blog futuro é público).
+- Autorizar e escopar por usuário em toda controller/query/view. Não logar CPF, senhas ou tokens.
 
 ## Comandos
-- Servidor de desenvolvimento: `bin/dev` (inicia o rails + `tailwindcss:watch`).
-- Configuração inicial (idempotente): `bin/setup` → `bin/rails db:prepare`. Flags opcionais: `--reset`, `--skip-server`.
-- CI Local: `bin/ci` executa `bin/setup --skip-server`, `bin/rubocop`, `bin/bundler-audit`, `bin/importmap audit` e `bin/brakeman`.
-- Análises de segurança: `bin/brakeman` e `bin/bundler-audit`. O Rubocop utiliza o estilo `rubocop-rails-omakase`.
-
-## Estado Atual / Ponto de Retomada
-- Branch `main`, sincronizado com `origin/main`, working tree limpo.
-- **Últimos commits:** `update_rails_8.1.3.1` (Rails atualizado p/ CVE-2026-66066 no Active Storage) e o merge do **Pomodoro** (feature completa: timer Stimulus em `app/javascript/controllers/time_controller.js`, presets 25/30/5min, tempo customizado, sons via Web Audio API, link no sidebar abrindo em nova aba).
-- **Próximos passos prováveis (placeholders no sidebar, `app/views/layouts/application.html.erb`):**
-  1. **Finanças** — link `href="#`  sem rota (em breve).
-  2. **Meus Currículos** — link `href="#"` sem rota. Model `Resume` existe mas ainda **sem** CRUD/rotas integradas.
+- Dev: `bin/dev` (Rails + `tailwindcss:watch`).
+- Setup idempotente: `bin/setup` → `bin/rails db:prepare`. Flags: `--reset`, `--skip-server`.
+- CI local: `bin/ci` (`bin/setup --skip-server`, `bin/rubocop`, `bin/bundler-audit`, `bin/importmap audit`, `bin/brakeman`).
+- Qualidade: `bin/rubocop` (estilo `rubocop-rails-omakase`), `bundle exec rspec`, `bin/brakeman`, `bin/bundler-audit`.
 
 ## Convenções
-- Os geradores do Rails estão configurados para **chaves primárias UUID** (`config.generators.orm.primary_key_type = :uuid`) — novos migrations devem utilizar IDs no formato UUID/string.
-- A autenticação é gerenciada pelo Devise; o `HomeController#index` é o único controller que ignora o filtro `authenticate_user!`.
-- Execute a verificação de código antes de finalizar qualquer tarefa: `bin/rubocop`.
+- **Chaves primárias UUID** (`config.generators.orm.primary_key_type = :uuid`) — novos migrations usam UUID.
+- Rails "do jeito Rails": REST, ActiveRecord, validações. Service objects só p/ lógica de negócio complexa; concerns só p/ comportamento compartilhado. Evitar abstrações prematuras.
+- Não adicionar gems sem justificativa; não introduzir frameworks frontend extras (React etc.).
+- Executar `bin/rubocop` antes de finalizar qualquer tarefa.
+
+## Filosofia de trabalho (pair programmer)
+- Entender o objetivo → verificar arquitetura existente → procurar/reutilizar código relacionado → propor a solução **mais simples** → implementar → checar efeitos colaterais → sugerir testes → explicar decisões.
+- Evoluir em camadas: problema real → modelo simples → CRUD funcional → UX → testes → refatoração → otimização. **Não** implementar features futuras antes da hora nem criar abstrações para funcionalidades que ainda não existem.
+
+## Estado Atual / Ponto de Retomada
+- Branch `documentation` (trabalho de documentação em andamento; sincronizado com `main`), working tree limpo.
+- **Últimos commits:** `update_rails_8.1.3.1` (CVE-2026-66066), merge do **Pomodoro** (timer Stimulus em `app/javascript/controllers/time_controller.js`).
+- **Próximos passos prováveis (placeholders em `app/views/layouts/application.html.erb`):**
+  1. **Meus Currículos** — CRUD/rotas do `Resume` + seleção de dados do Perfil (link no sidebar).
+  2. **Finanças** — módulo planejado, manter simples (link no sidebar).
+  3. **Dashboard** — transformar a Home logada em central de navegação.
